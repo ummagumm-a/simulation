@@ -1,0 +1,7 @@
+
+ƒ
+java:S1319"mThe type of the "world" object should be an interface such as "Map" rather than the implementation "HashMap".(§Ìšþ
+A
+java:S1444"+Make this "public static world" field final(§Ìšþ
+g
+java:S1104"QMake world a static final constant or non-public and provide accessors if needed.(§Ìšþ
