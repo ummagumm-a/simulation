@@ -27,3 +27,22 @@ Dsrc/simulator/viacheslav_sinii/plot_of_the_world/ProperPosition.java,3/4/345f9
 -src/simulator/viacheslav_sinii/Simulator.java,2/6/26fafc2410187fba69b0a370dd5e5b148b92b233
 k
 ;src/simulator/viacheslav_sinii/plot_of_the_world/Scene.java,4/c/4c0dea8962d670c2c9515e6419535aa287fd8187
+:
+
+.classpath,3/5/354079a72b91a4280407c16a36f47d1986fd85a5
+8
+.project,f/8/f8b41ce76d7b80d2b47e91b5f92c15f00eccf187
+[
++src/simulator/do_not_change/Aggressive.java,7/c/7cc855f29a7e322b9fd6973d73d2bb5e27f61b03
+\
+,src/simulator/do_not_change/CapitalCase.java,1/b/1b5ce8cef8dc5538f6dd7c78e973708ee28c85cf
+F
+ITP 1 Assignment 2.iml,8/c/8c4bf58db1212f021e51db8cc3af05adc0fcbe5c
+T
+$.settings/org.eclipse.jdt.core.prefs,2/8/28e4a2e57ea1412e35cd955351520c20c1e52c43
+X
+(src/simulator/do_not_change/Passive.java,b/d/bd1f50794d9d80f4b71c7cc4f93c87af8624c975
+Z
+*src/simulator/do_not_change/SmallCase.java,f/c/fcc607391011d281f3c85397496fe17db381b4bd
+9
+	scene.txt,0/e/0e65e716f2437eaaa9c15e4ba7c82d8f6e8faa58

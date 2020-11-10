@@ -28,19 +28,21 @@ public class Grid {
      * which corresponds to the symbol that is currently placed here.
      */
     static void constructPlot() {
+        plot = "";
         for (int row = 0; row < WorldController.MAX_ROWS; row++) {
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
-                plot += "┌─────┐";
+                plot += "┌───┐";
             }
             plot += "\n";
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
-                plot += "|  " + (char) fields[row][column][1] + "  |";
+                plot += "| " + (char) fields[row][column][1] + " |";
             }
             plot += "\n";
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
-                plot += "└─────┘";
+                plot += "└───┘";
             }
             plot += "\n";
+
         }
     }
 

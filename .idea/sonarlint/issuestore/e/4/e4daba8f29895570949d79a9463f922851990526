@@ -1,7 +1,7 @@
 
-f
-java:S1206"PThis class overrides "hashCode()" and should therefore also override "equals()".(ğÜşŠ
 e
 java:S1104"OMake row a static final constant or non-public and provide accessors if needed.(²¤÷”
 h
 java:S1104"RMake column a static final constant or non-public and provide accessors if needed.(‰¹´
+f
+java:S1206"PThis class overrides "hashCode()" and should therefore also override "equals()".(ğÜşŠ
