@@ -1,0 +1,11 @@
+./Simulator.java
+./SymbolSmallR.java
+./SymbolCapitalR.java
+./SymbolCapitalP.java
+./Scene.java
+./SymbolSmallS.java
+./ProperPosition.java
+./Grid.java
+./SetsOfSymbols.java
+./SymbolSmallP.java
+./SymbolCapitalS.java

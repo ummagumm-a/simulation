@@ -22,13 +22,9 @@ public class Scene extends WorldController {
         world = new HashMap<>();
         for (Map.Entry<Integer, Symbol> symbol :
                 SetsOfSymbols.allSymbolsAlive.entrySet()) {
-            try {
-                world.get(symbol.getValue().getPosition()).add(symbol.getValue());
-            } catch (NullPointerException e) {
-                LinkedList<Symbol> tmp = new LinkedList<>();
-                tmp.add(symbol.getValue());
-                world.put(symbol.getValue().getPosition(), tmp);
-            }
+            LinkedList<Symbol> tmp = new LinkedList<>();
+            tmp.add(symbol.getValue());
+            world.put(symbol.getValue().getPosition(), tmp);
         }
     }
 
@@ -90,7 +86,7 @@ public class Scene extends WorldController {
 
     @Override
     public String plotWorld() {
-        Grid.refresh();
+//        Grid.refresh();
         Grid.constructPlot();
 
         return Grid.plot;
@@ -143,30 +139,30 @@ public class Scene extends WorldController {
             createSymbol(isOccupied, new SymbolCapitalP());
         }
 
-        for (int i = 0; i < 10; i++) {
-            createSymbol(isOccupied, new SymbolCapitalR());
-        }
-
-        for (int i = 0; i < 10; i++) {
-            createSymbol(isOccupied, new SymbolCapitalS());
-        }
-
-        for (int i = 0; i < 10; i++) {
-            createSymbol(isOccupied, new SymbolSmallP());
-        }
-
-        for (int i = 0; i < 10; i++) {
-            createSymbol(isOccupied, new SymbolSmallR());
-        }
-
-        for (int i = 0; i < 10; i++) {
-            createSymbol(isOccupied, new SymbolSmallS());
-        }
+//        for (int i = 0; i < 10; i++) {
+//            createSymbol(isOccupied, new SymbolCapitalR());
+//        }
+//
+//        for (int i = 0; i < 10; i++) {
+//            createSymbol(isOccupied, new SymbolCapitalS());
+//        }
+//
+//        for (int i = 0; i < 10; i++) {
+//            createSymbol(isOccupied, new SymbolSmallP());
+//        }
+//
+//        for (int i = 0; i < 10; i++) {
+//            createSymbol(isOccupied, new SymbolSmallR());
+//        }
+//
+//        for (int i = 0; i < 10; i++) {
+//            createSymbol(isOccupied, new SymbolSmallS());
+//        }
     }
 
     /* In this method we randomly choose an empty cell for allocating the unit.
      * This method is used only in the very beginning. */
-    private void createSymbol(Map<Integer, Boolean> isOccupied, Symbol symbol) {
+    private <T extends Symbol> void createSymbol(Map<Integer, Boolean> isOccupied, T symbol) {
         Random random = new Random();
 
         /* We keep choosing random coordinates until an empty cell is found. */
