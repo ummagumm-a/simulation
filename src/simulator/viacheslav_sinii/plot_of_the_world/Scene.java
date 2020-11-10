@@ -20,11 +20,11 @@ public class Scene extends WorldController {
         assignContent();
 
         world = new HashMap<>();
-        for (Map.Entry<Integer, Symbol> symbol :
-                SetsOfSymbols.allSymbolsAlive.entrySet()) {
+        for (Symbol symbol :
+                SetsOfSymbols.allSymbolsAlive) {
             LinkedList<Symbol> tmp = new LinkedList<>();
-            tmp.add(symbol.getValue());
-            world.put(symbol.getValue().getPosition(), tmp);
+            tmp.add(symbol);
+            world.put(symbol.getPosition(), tmp);
         }
     }
 
@@ -97,26 +97,9 @@ public class Scene extends WorldController {
      * corresponding character to that position.
      */
     private void assignContent() {
-        for (Map.Entry<Integer, Symbol> entry :
-                SetsOfSymbols.allSymbolsAlive.entrySet()) {
-            char tmp;
-            if (entry.getValue() instanceof SymbolCapitalP) {
-                tmp = CAPITAL_P;
-            } else if (entry.getValue() instanceof SymbolCapitalR) {
-                tmp = CAPITAL_R;
-            } else if (entry.getValue() instanceof SymbolCapitalS) {
-                tmp = CAPITAL_S;
-            } else if (entry.getValue() instanceof SymbolSmallP) {
-                tmp = SMALL_P;
-            } else if (entry.getValue() instanceof SymbolSmallR) {
-                tmp = SMALL_R;
-            } else if (entry.getValue() instanceof SymbolSmallS) {
-                tmp = SMALL_S;
-            } else {
-                tmp = ' ';
-            }
-            Grid.fields[entry.getValue().getPosition().row][entry.getValue().getPosition().column][0] = entry.getKey();
-            Grid.fields[entry.getValue().getPosition().row][entry.getValue().getPosition().column][1] = tmp;
+        for (Symbol entry :
+                SetsOfSymbols.allSymbolsAlive) {
+            Grid.fields[entry.getPosition().row][entry.getPosition().column] = entry;
         }
     }
 

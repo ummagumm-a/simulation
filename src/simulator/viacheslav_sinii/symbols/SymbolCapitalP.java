@@ -32,8 +32,7 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
         int[] movement = calculateDirection();
         position.row += movement[0];
         position.column += movement[1];
-        Grid.fields[position.row][position.column][0] = idSymbol;
-        Grid.fields[position.row][position.column][1] = 'P';
+        Grid.fields[position.row][position.column] = this;
         WorldController.world.get(this.position).add(this);
 
     }
@@ -56,14 +55,14 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
 
     /* Check whether all adjacent cells are occupied by not-similar symbol */
     private boolean isSurrounded() {
-        return (Grid.fields[position.row + 1][position.column][1] != ' '
-                    && Grid.fields[position.row + 1][position.column][1] != 'P')
-                && (Grid.fields[position.row - 1][position.column][1] != ' '
-                    && Grid.fields[position.row - 1][position.column][1] != 'P')
-                && (Grid.fields[position.row][position.column + 1][1] != ' '
-                    && Grid.fields[position.row][position.column + 1][1] != 'P')
-                && (Grid.fields[position.row][position.column - 1][1] != ' '
-                    && Grid.fields[position.row][position.column - 1][1] != 'P');
+        return (Grid.fields[position.row + 1][position.column] != null
+                    && !(Grid.fields[position.row + 1][position.column] instanceof SymbolCapitalP))
+                && (Grid.fields[position.row - 1][position.column] != null
+                    && !(Grid.fields[position.row - 1][position.column] instanceof SymbolCapitalP))
+                && (Grid.fields[position.row][position.column + 1] != null
+                    && !(Grid.fields[position.row][position.column + 1] instanceof SymbolCapitalP))
+                && (Grid.fields[position.row][position.column - 1] != null
+                    && !(Grid.fields[position.row][position.column - 1] instanceof SymbolCapitalP));
     }
 
     /* Check whether there are similar symbols in the sight distance */
@@ -102,13 +101,13 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
         ArrayList<Position> visiblePositions = getCellsWithinSightDistance();
         for (Position pos :
                 visiblePositions) {
-            int[] symbolInTheCell = Grid.fields[pos.row][pos.column];
-            if (symbolInTheCell[1] == 'P') {
-                similarSymbolsWithinSightDistance.add((SymbolCapitalP) SetsOfSymbols.allSymbolsAlive.get(symbolInTheCell[0]));
-            } else if (symbolInTheCell[1] == 's' || symbolInTheCell[1] == 'S') {
-                dangerousSymbolsWithinSightDistance.add(SetsOfSymbols.allSymbolsAlive.get(symbolInTheCell[0]));
-            } else if (symbolInTheCell[1] != ' ') {
-                neutralSymbolsWithinSightDistance.add(SetsOfSymbols.allSymbolsAlive.get(symbolInTheCell[0]));
+            Symbol symbolInTheCell = Grid.fields[pos.row][pos.column];
+            if (symbolInTheCell instanceof SymbolCapitalP) {
+                similarSymbolsWithinSightDistance.add((SymbolCapitalP) symbolInTheCell);
+            } else if (symbolInTheCell instanceof SymbolSmallS || symbolInTheCell instanceof SymbolCapitalS) {
+                dangerousSymbolsWithinSightDistance.add(symbolInTheCell);
+            } else if (symbolInTheCell != null) {
+                neutralSymbolsWithinSightDistance.add(symbolInTheCell);
             }
         }
     }

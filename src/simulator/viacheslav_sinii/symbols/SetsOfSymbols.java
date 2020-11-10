@@ -3,6 +3,8 @@ package simulator.viacheslav_sinii.symbols;
 import simulator.do_not_change.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,11 +17,11 @@ import java.util.Map;
 public class SetsOfSymbols {
     /* HashMaps for all living symbols altogether and separately for each type of the symbol
      * Key is the id of a symbol and value is the symbol itself. */
-    public static Map<Integer, Symbol> allSymbolsAlive = new HashMap<>();
-    public static Map<Integer, SmallCase> allSmallCaseSymbolsAlive = new HashMap<>();
-    public static Map<Integer, CapitalCase> allCapitalCaseSymbolsAlive = new HashMap<>();
-    public static Map<Integer, Passive> allPassiveSymbolsAlive = new HashMap<>();
-    public static Map<Integer, Aggressive> allAggressiveSymbolsAlive = new HashMap<>();
+    public static List<Symbol> allSymbolsAlive = new LinkedList<>();
+    public static List<SmallCase> allSmallCaseSymbolsAlive = new LinkedList<>();
+    public static List<CapitalCase> allCapitalCaseSymbolsAlive = new LinkedList<>();
+    public static List<Passive> allPassiveSymbolsAlive = new LinkedList<>();
+    public static List<Aggressive> allAggressiveSymbolsAlive = new LinkedList<>();
 
     public static int idCounter = 1;
 
@@ -28,18 +30,18 @@ public class SetsOfSymbols {
      * @param symbol The symbol to add.
      */
     public static void add(Symbol symbol) {
-        allSymbolsAlive.put(symbol.getIdSymbol(), symbol);
+        allSymbolsAlive.add(symbol);
         if (symbol instanceof SmallCase) {
-            allSmallCaseSymbolsAlive.put(symbol.getIdSymbol(), (SmallCase) symbol);
+            allSmallCaseSymbolsAlive.add((SmallCase) symbol);
         }
         if (symbol instanceof CapitalCase) {
-            allCapitalCaseSymbolsAlive.put(symbol.getIdSymbol(), (CapitalCase) symbol);
+            allCapitalCaseSymbolsAlive.add((CapitalCase) symbol);
         }
         if (symbol instanceof Passive) {
-            allPassiveSymbolsAlive.put(symbol.getIdSymbol(), (Passive) symbol);
+            allPassiveSymbolsAlive.add((Passive) symbol);
         }
         if (symbol instanceof Aggressive) {
-            allAggressiveSymbolsAlive.put(symbol.getIdSymbol(), (Aggressive) symbol);
+            allAggressiveSymbolsAlive.add((Aggressive) symbol);
         }
     }
 
@@ -47,11 +49,11 @@ public class SetsOfSymbols {
      * and from the one that corresponds to the type of the symbol.
      * @param symbol The symbol to delete.
      */
-    public static void kill(Symbol symbol) {
-        allSymbolsAlive.remove(symbol.getIdSymbol());
-        allSmallCaseSymbolsAlive.remove(symbol.getIdSymbol());
-        allCapitalCaseSymbolsAlive.remove(symbol.getIdSymbol());
-        allPassiveSymbolsAlive.remove(symbol.getIdSymbol());
-        allAggressiveSymbolsAlive.remove(symbol.getIdSymbol());
+    public static <T extends Symbol> void kill(T symbol) {
+        allSymbolsAlive.remove(symbol);
+        allSmallCaseSymbolsAlive.remove(symbol);
+        allCapitalCaseSymbolsAlive.remove(symbol);
+        allPassiveSymbolsAlive.remove(symbol);
+        allAggressiveSymbolsAlive.remove(symbol);
     }
 }
