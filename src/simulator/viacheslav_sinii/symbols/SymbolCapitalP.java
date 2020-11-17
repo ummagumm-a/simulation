@@ -1,74 +1,178 @@
 package simulator.viacheslav_sinii.symbols;
 
 import simulator.do_not_change.*;
-import simulator.viacheslav_sinii.plot_of_the_world.Grid;
-import simulator.viacheslav_sinii.plot_of_the_world.ProperPosition;
-import simulator.viacheslav_sinii.plot_of_the_world.Scene;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
+    public boolean isPaired;
+    public boolean isPassive;
+    public boolean isEscaping;
+    public boolean isBreeding;
+    public boolean isJumping;
 
-    ArrayList<SymbolCapitalP> similarSymbolsWithinSightDistance = new ArrayList<>();
-    ArrayList<Symbol> dangerousSymbolsWithinSightDistance = new ArrayList<>();
-    ArrayList<Symbol> neutralSymbolsWithinSightDistance = new ArrayList<>();
-
-    double[] destination;
-    double denominator = 0.0;
+    Symbol closest = null;
+    HashSet<SymbolCapitalP> blackList = new HashSet<>();
+    LinkedList<SymbolCapitalP> potentialPartners = new LinkedList<>();
+    LinkedList<Symbol> enemies = new LinkedList<>();
 
     public SymbolCapitalP() {
-        idSymbol = SetsOfSymbols.idCounter++;
+        idSymbol = Symbol.COUNT_SYMBOLS++;
         sightDistance = 3;
-        numberIterationsAlive = 50;
-        position = new ProperPosition(0, 0);
-        destination = new double[]{position.row, position.column};
     }
 
     @Override
     public void move() {
-        senseOtherSymbols();
-        WorldController.world.get(this.position).remove(this);
-        int[] movement = calculateDirection();
-        position.row += movement[0];
-        position.column += movement[1];
-        Grid.fields[position.row][position.column] = this;
-        WorldController.world.get(this.position).add(this);
+        isPaired = false;
+        isPassive = false;
+        isEscaping = false;
+        isBreeding = false;
+        isJumping = false;
 
+        scan();
+        closest = findClosest();
+
+        if (closest instanceof SymbolSmallS) {
+            isBreeding = true;
+            if (this.position.manhattanDistance(closest.getPosition()) == 1) {
+                pairForBreed((SymbolSmallS) closest);
+            }
+        } else if (closest != null) {
+            isEscaping = true;
+        } else {
+            isJumping = true;
+        }
+
+        becomeOlder();
     }
 
+    private Symbol findClosest() {
+        Symbol closestDanger = null;
+        Symbol closestPartner = null;
+        int minDistanceToDanger = 10;
+        int minDistanceToPartner = 10;
+
+        for (SymbolCapitalP symbol :
+                potentialPartners) {
+            if (this.getPosition().manhattanDistance(symbol.getPosition()) <= minDistanceToPartner) {
+                closestPartner = symbol;
+                minDistanceToPartner = this.getPosition().manhattanDistance(symbol.getPosition());
+            }
+        }
+
+        for (Symbol symbol :
+                enemies) {
+            if (this.getPosition().manhattanDistance(symbol.getPosition()) <= minDistanceToPartner) {
+                closestDanger = symbol;
+                minDistanceToDanger = this.getPosition().manhattanDistance(symbol.getPosition());
+            }
+        }
+
+        return minDistanceToDanger > minDistanceToPartner ? closestPartner : closestDanger;
+    }
+
+    private void scan() {
+        for (int row = 0; row < WorldController.MAX_ROWS; row++) {
+            for (int column = 0; column < WorldController.MAX_COLS; column++) {
+                if (row == position.row && column == position.column) {
+                    continue;
+                }
+                if (Math.abs(position.row - row) + Math.abs(position.column - column) <= sightDistance) {
+                    Position pos = new Position(row, column);
+                    LinkedList<Symbol> symbols;
+                    try {
+                        symbols = WorldController.world.get(pos);
+                    } catch (IndexOutOfBoundsException e) {
+                        continue;
+                    }
+                    for (Symbol symbol :
+                            symbols) {
+                        if (!this.equals(symbol)) {
+                            if (symbol instanceof SymbolCapitalP) {
+                                if (this.getNumberIterationsAlive() > 6 && symbol.getNumberIterationsAlive() > 6
+                                        && !blackList.contains(symbol)) {
+                                    potentialPartners.add((SymbolCapitalP) symbol);
+                                }
+                            } else if (symbol != null) {
+                                enemies.add(symbol);
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    protected int[] calculateDirection() {
+        if (isPassive) {
+            return new int[]{0, 0};
+        }
+
+        int rowGreater = this.position.row - closest.getPosition().row;
+        int columnGreater = this.position.column - closest.getPosition().column;
+
+        if (Math.abs(rowGreater) > Math.abs(columnGreater)) {
+            if (rowGreater < 0) {
+                return new int[]{1, 0};
+            } else {
+                return new int[]{-1, 0};
+            }
+        } else {
+            if (columnGreater < 0) {
+                return new int[]{0, 1};
+            } else {
+                return new int[]{0, -1};
+            }
+        }
+    }
+    
     @Override
     public void die() {
         SetsOfSymbols.kill(this);
-//        Grid.fields[this.position.row][this.position.column][1] = ' ';
         WorldController.world.get(this.position).remove(this);
     }
 
     @Override
     public void jump() {
-        if (isSurrounded() || !doesMateExist()) {
-            Random random = new Random();
-            destination[0] = random.nextInt(WorldController.MAX_ROWS);
-            destination[1] = random.nextInt(WorldController.MAX_COLS);
-        }
+//        if (isSurrounded() || !doesMateExist()) {
+//            Random random = new Random();
+//            destination[0] = random.nextInt(WorldController.MAX_ROWS);
+//            destination[1] = random.nextInt(WorldController.MAX_COLS);
+//        }
     }
 
     /* Check whether all adjacent cells are occupied by not-similar symbol */
-    private boolean isSurrounded() {
-        return (Grid.fields[position.row + 1][position.column] != null
-                    && !(Grid.fields[position.row + 1][position.column] instanceof SymbolCapitalP))
-                && (Grid.fields[position.row - 1][position.column] != null
-                    && !(Grid.fields[position.row - 1][position.column] instanceof SymbolCapitalP))
-                && (Grid.fields[position.row][position.column + 1] != null
-                    && !(Grid.fields[position.row][position.column + 1] instanceof SymbolCapitalP))
-                && (Grid.fields[position.row][position.column - 1] != null
-                    && !(Grid.fields[position.row][position.column - 1] instanceof SymbolCapitalP));
-    }
-
-    /* Check whether there are similar symbols in the sight distance */
-    private boolean doesMateExist() {
-        return !similarSymbolsWithinSightDistance.isEmpty();
-    }
+//    private boolean isSurrounded() {
+//        boolean result = true;
+//        if (position.row < 9) {
+//            result &= Grid.fields[position.row + 1][position.column] != null
+//                    && !(Grid.fields[position.row + 1][position.column] instanceof SymbolCapitalP);
+//        }
+//        if (position.row > 0) {
+//            result &= Grid.fields[position.row - 1][position.column] != null
+//                    && !(Grid.fields[position.row - 1][position.column] instanceof SymbolCapitalP);
+//        }
+//        if (position.column < 9) {
+//            result &= Grid.fields[position.row][position.column + 1] != null
+//                    && !(Grid.fields[position.row][position.column + 1] instanceof SymbolCapitalP);
+//        }
+//        if (position.column > 0) {
+//            result &= Grid.fields[position.row][position.column - 1] != null
+//                    && !(Grid.fields[position.row][position.column - 1] instanceof SymbolCapitalP);
+//        }
+//
+//        return result;
+//
+//    }
+//
+//    /* Check whether there are similar symbols in the sight distance */
+//    private boolean doesMateExist() {
+//        return !similarSymbolsWithinSightDistance.isEmpty();
+//    }
 
 //    /* Check whether there are symbols which can be killed in the sight distance */
 //    private boolean doesPreyExist() {
@@ -77,81 +181,111 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
 
     @Override
     public void escape() {
-        for (Symbol symbol :
-                dangerousSymbolsWithinSightDistance) {
-            calculateDestination(symbol, 3);
-        }
-
-        for (Symbol symbol :
-                neutralSymbolsWithinSightDistance) {
-            calculateDestination(symbol, 1);
-        }
+//        for (Symbol symbol :
+//                dangerousSymbolsWithinSightDistance) {
+//            calculateDestination(symbol, 3);
+//        }
+//
+//        for (Symbol symbol :
+//                neutralSymbolsWithinSightDistance) {
+//            calculateDestination(symbol, 1);
+//        }
 
     }
 
     @Override
     public void moveBreed() {
+        if (isBreeding) {
+            int[] direction = calculateDirection();
+            WorldController.world.get(this.position).remove(this);
+            this.position.row += direction[0];
+            this.position.column += direction[1];
+            cut();
+            WorldController.world.get(this.position).add(this);
+            breed();
+        }
+    }
+
+    private void cut() {
+        if (position.row > 9) {
+            position.row = 9;
+        }
+        if (position.row < 0) {
+            position.row = 0;
+        }
+
+        if (position.column > 9) {
+            position.column = 9;
+        }
+        if (position.column < 0) {
+            position.column = 0;
+        }
+    }
+
+    private void breed() {
+        int numberOfChildren = 0;
+
         for (Symbol symbol :
-                similarSymbolsWithinSightDistance) {
-            calculateDestination(symbol, -2);
-        }
-    }
-
-    private void senseOtherSymbols() {
-        ArrayList<Position> visiblePositions = getCellsWithinSightDistance();
-        for (Position pos :
-                visiblePositions) {
-            Symbol symbolInTheCell = Grid.fields[pos.row][pos.column];
-            if (symbolInTheCell instanceof SymbolCapitalP) {
-                similarSymbolsWithinSightDistance.add((SymbolCapitalP) symbolInTheCell);
-            } else if (symbolInTheCell instanceof SymbolSmallS || symbolInTheCell instanceof SymbolCapitalS) {
-                dangerousSymbolsWithinSightDistance.add(symbolInTheCell);
-            } else if (symbolInTheCell != null) {
-                neutralSymbolsWithinSightDistance.add(symbolInTheCell);
-            }
-        }
-    }
-
-    private ArrayList<Position> getCellsWithinSightDistance() {
-        ArrayList<Position> positions = new ArrayList<>();
-        for (int row = 0; row < WorldController.MAX_ROWS; row++) {
-            for (int column = 0; column < WorldController.MAX_COLS; column++) {
-                if (Math.abs(position.row - row) + Math.abs(position.column - column) <= sightDistance) {
-                    positions.add(new ProperPosition(row, column));
+                WorldController.world.get(this.position)) {
+            if (symbol instanceof SymbolCapitalP) {
+                if (!this.equals(symbol) && !blackList.contains(symbol)) {
+                    numberOfChildren++;
+                    blackList.add((SymbolCapitalP) symbol);
+                    ((SymbolCapitalP) symbol).blackList.add(this);
                 }
             }
         }
 
-        return positions;
+        createChildren(numberOfChildren);
     }
 
-    private void calculateDestination(Symbol symbol, int dangerCoefficient) {
-        int distance = Math.abs(symbol.getPosition().row - position.row) + Math.abs(symbol.getPosition().column - position.column);
-        int coefficient = dangerCoefficient * (sightDistance - distance + 1);
-        destination[0] += coefficient * (symbol.getPosition().row - position.row);
-        destination[1] += coefficient * (symbol.getPosition().column - position.column);
-        denominator += coefficient;
-    }
-
-    private int[] calculateDirection() {
-        destination[0] /= denominator;
-        destination[1] /= denominator;
-
-        double rowGreater = destination[0] - position.row;
-        double columnGreater = destination[1] - position.column;
-
-        if (Math.abs(rowGreater) > Math.abs(columnGreater)) {
-            if (rowGreater > 0) {
-                return new int[]{1, 0};
-            } else {
-                return new int[]{-1, 0};
-            }
-        } else {
-            if (columnGreater > 0) {
-                return new int[]{0, 1};
-            } else {
-                return new int[]{0, -1};
-            }
+    private void createChildren(int n) {
+        HashMap<Integer, Position> adjacentPositions = new HashMap<>();
+        Position pos;
+        int enumeration = 1;
+        if (getPosition().row > 0) {
+            pos = new Position(getPosition().row - 1, getPosition().column);
+            adjacentPositions.put(enumeration++, pos);
         }
+        if (getPosition().row < 9) {
+            pos = new Position(getPosition().row + 1, getPosition().column);
+            adjacentPositions.put(enumeration++, pos);
+        }
+        if (getPosition().column > 0) {
+            pos = new Position(getPosition().row, getPosition().column - 1);
+            adjacentPositions.put(enumeration++, pos);
+        }
+        if (getPosition().column < 9) {
+            pos = new Position(getPosition().row, getPosition().column + 1);
+            adjacentPositions.put(enumeration, pos);
+        }
+
+        for (int i = 0; i < n; i++) {
+            createSymbol(adjacentPositions, new SymbolCapitalP());
+        }
+
     }
+
+    public <T extends Symbol> void createSymbol(HashMap<Integer, Position> adjacentPositions, T symbol) {
+        Random random = new Random();
+        int randomPosition = random.nextInt(adjacentPositions.size()) + 1;
+
+        symbol.setPosition(adjacentPositions.get(randomPosition));
+        WorldController.world.get(adjacentPositions.get(randomPosition)).add(symbol);
+        SetsOfSymbols.add(symbol);
+    }
+    
+    public void pairForBreed(SymbolSmallS partner) {
+        isPaired = true;
+        if (partner.isPaired) {
+            isPassive = !partner.isPassive;
+            return;
+        }
+
+        partner.isPaired = true;
+        Random random = new Random();
+        isPassive = random.nextBoolean();
+        partner.isPassive = !isPassive;
+    }
+
 }

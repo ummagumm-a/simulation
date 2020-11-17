@@ -1,9 +1,13 @@
 
+]	java:S125"<This block of commented-out lines of code should be removed.(¢¸‡Ùıÿÿÿÿ8ù®Û.
+U	java:S106."9Replace this use of System.out or System.err by a logger.(ÚÂâ8šµ÷’Û.
+n
+java:S1128"LRemove this unused import 'simulator.viacheslav_sinii.symbols.SymbolSmallR'.(ğ™Î¦ûÿÿÿÿ8íİŒªİ.
 v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(‰½È8·· €Û.
-U	java:S106("9Replace this use of System.out or System.err by a logger.(Îñ¤±8Í€Ä€Û.
+o
+java:S1128"MRemove this unused import 'simulator.viacheslav_sinii.symbols.SetsOfSymbols'.(çâŸŸüÿÿÿÿ8íİŒªİ.
+b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(‹¬8‹Ş´“Û.
 S
-java:S1068"6Remove this unused "numberOfIterations" private field.(‰½È8Ä”Â€Û.
-X	java:S125"<This block of commented-out lines of code should be removed.(µÔĞ8Ä”Â€Û.
-]
-java:S1128";Remove this unused import 'simulator.do_not_change.Symbol'.(Á¦äïûÿÿÿÿ8ùÒÿÚ.
-b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(‹¬8êØÅ€Û.
+java:S1068"6Remove this unused "numberOfIterations" private field.(‰½È8àœ§Û.
+U	java:S106$"9Replace this use of System.out or System.err by a logger.(Îñ¤±8Éãªİ.
+U	java:S106-"9Replace this use of System.out or System.err by a logger.(Îœò—8šµ÷’Û.

@@ -1,25 +1,32 @@
 
 >
-java:S1643'"Use a StringBuilder instead.(õ°•àûÿÿÿÿ8Õ­–øÚ.
-m
-java:S1104"PMake plot a static final constant or non-public and provide accessors if needed.(£¶œ8–ÉøÚ.
-I
-java:S1444",Make this "public static fields" field final(òº·‰8ÜÙÏÚ.
-G
-java:S1444"*Make this "public static plot" field final(£¶œ8–ÉøÚ.
-:
-java:S2386"Make this member "protected".(òº·‰8¤Æ¿ĞÚ.
+java:S1643."Use a StringBuilder instead.(Ãø¡¦ıÿÿÿÿ8ƒø•Û.
 >
-java:S1643#"Use a StringBuilder instead.(õ°•àûÿÿÿÿ8ÉØ”øÚ.
-9
-java:S1643%"Use a StringBuilder instead.(ÇÉÑ°8şş‘øÚ.
->
-java:S1643+"Use a StringBuilder instead.(õ°•àûÿÿÿÿ8éœ£øÚ.
+java:S16432"Use a StringBuilder instead.(µ‚îøÿÿÿÿ8¾ëåœÛ.
 W
-java:S1118":Add a private constructor to hide the implicit public one.(ƒÆ±¤8×”ÛÑÚ.
+java:S1118":Add a private constructor to hide the implicit public one.(ƒÆ±¤8ƒø•Û.
+K
+java:S1444"/Make this "public static positions" field final(ª²‰F8äøÜœÛ.
+I
+java:S1444",Make this "public static fields" field final( À¾­8ƒø•Û.
+:
+java:S2386"Make this member "protected".( À¾­8ƒø•Û.
+J	java:S108b")Either remove or fill this block of code.(Ñˆ¿‘úÿÿÿÿ8Ïî¢Û.
+>
+java:S16438"Use a StringBuilder instead.(õ°•àûÿÿÿÿ8ƒø•Û.
+>
+java:S16434"Use a StringBuilder instead.(õ°•àûÿÿÿÿ8ƒø•Û.
+L
+java:S1444"*Make this "public static plot" field final(Æ¾¯¸üÿÿÿÿ8°ˆø•Û.
+r
+java:S1104"PMake plot a static final constant or non-public and provide accessors if needed.(Æ¾¯¸üÿÿÿÿ8°ˆø•Û.
 9
-java:S1643)"Use a StringBuilder instead.(éØÿ³8Ş’øÚ.
+java:S2386"Make this member "protected".(ª²‰F8äøÜœÛ.
+9
+java:S16436"Use a StringBuilder instead.(ŸéĞƒ8ƒø•Û.
 o
-java:S1104"RMake fields a static final constant or non-public and provide accessors if needed.(òº·‰8˜ÈæÎÚ.
-9
-java:S1643!"Use a StringBuilder instead.(ã‰şª8”·‘øÚ.
+java:S1104"RMake fields a static final constant or non-public and provide accessors if needed.( À¾­8ƒø•Û.
+q
+java:S1104"UMake positions a static final constant or non-public and provide accessors if needed.(ª²‰F8äøÜœÛ.
+>
+java:S16430"Use a StringBuilder instead.(õ°•àûÿÿÿÿ8ƒø•Û.

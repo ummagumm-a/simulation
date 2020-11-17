@@ -2,10 +2,8 @@ package simulator.viacheslav_sinii.symbols;
 
 import simulator.do_not_change.*;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This class is used for storing and managing the information

@@ -1,11 +1,27 @@
 
+;
+java:S2119ï"Save and re-use this "Random".(¼İÅf8ûîªİ.
+;
+java:S2119ÿ"Save and re-use this "Random".(¼İÅf8ûîªİ.
+x
+java:S1104"VMake isBreeding a static final constant or non-public and provide accessors if needed.(ÅË‰üÿÿÿÿ8ûîªİ.
+M
+java:S2160
+"+Override the "equals" method in this class.(Ò ®ûûÿÿÿÿ8ûîªİ.
+u	java:S135R"YReduce the total number of break and continue statements in this loop to use at most one.(Á¼Âˆ8ûîªİ.
+X	java:S125Ã"<This block of commented-out lines of code should be removed.(¿²ÆO8ûîªİ.
+w
+java:S1104"UMake isPassive a static final constant or non-public and provide accessors if needed.(¡‚óÑúÿÿÿÿ8ïİŒªİ.
 œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(²Ïşƒøÿÿÿÿ
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(´õÁ¬şÿÿÿÿ
-œ
-java:S1186!"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(˜ÄÒòùÿÿÿÿ
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(œ€Íùÿÿÿÿ
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(§ÅßÁúÿÿÿÿ
+java:S1319î"yThe type of the "adjacentPositions" object should be an interface such as "Map" rather than the implementation "HashMap".(ıÌš£ıÿÿÿÿ8ûîªİ.
+F	java:S108")Either remove or fill this block of code.(Ò™²±8ûîªİ.
+p
+java:S1104"TMake isPaired a static final constant or non-public and provide accessors if needed.(ªŒÈI8ïİŒªİ.
+o
+java:S3776P"RRefactor this method to reduce its Cognitive Complexity from 38 to the 15 allowed.(§ÁøÛ8ûîªİ.
+s
+java:S1104"VMake isEscaping a static final constant or non-public and provide accessors if needed.(±Ê€Ì8ïİŒªİ.
+L
+java:S1066¸"/Merge this if statement with the enclosing one.(Õˆ¬8ûîªİ.
+w
+java:S1104"UMake isJumping a static final constant or non-public and provide accessors if needed.(ÙùöØşÿÿÿÿ8ûîªİ.

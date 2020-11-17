@@ -21,8 +21,6 @@ j
 :src/simulator/viacheslav_sinii/plot_of_the_world/Grid.java,9/d/9d76fc1628baaeff39161b012368e00893490de7
 i
 9src/simulator/viacheslav_sinii/symbols/SetsOfSymbols.java,0/b/0b765529b130f4adcab9b50e71331f60a1ed9341
-t
-Dsrc/simulator/viacheslav_sinii/plot_of_the_world/ProperPosition.java,3/4/345f9a5e604e53e6e30c2d7730af8146abe0f5e9
 ]
 -src/simulator/viacheslav_sinii/Simulator.java,2/6/26fafc2410187fba69b0a370dd5e5b148b92b233
 k
@@ -46,3 +44,17 @@ Z
 *src/simulator/do_not_change/SmallCase.java,f/c/fcc607391011d281f3c85397496fe17db381b4bd
 9
 	scene.txt,0/e/0e65e716f2437eaaa9c15e4ba7c82d8f6e8faa58
+:
+
+bin/run.sh,5/2/52912c28cdfcc343ebf5ffe0697dbec4d3d408a4
+:
+
+src/run.sh,d/1/d142f1c3af513e34aefc3859a04725121b719573
+?
+bin/sources.txt,5/0/50389d2b14da0f21eb1a49e8cc267acb03493983
+?
+src/sources.txt,a/c/acdacf9c81d157c7386c73cde55db9938d474f3a
+H
+src/simulator/.gitignore,7/4/74e1eb0bf5f8f8ca1d53aa7c549a606715e0772d
+j
+:src/simulator/viacheslav_sinii/symbols/AdvancedSymbol.java,c/a/ca6ac08e878dda9dd4fb7d1c900eb449c813197f

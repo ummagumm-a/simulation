@@ -2,6 +2,8 @@ package simulator.do_not_change;
 
 public abstract class Symbol {
 
+	public static int COUNT_SYMBOLS = 0;
+
 	/**
 	 * Unique for each symbol
 	 */
@@ -53,6 +55,16 @@ public abstract class Symbol {
 		int hash = 7;
 		hash = 31 * hash + Integer.hashCode(idSymbol);
 		return hash;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Symbol symbol = (Symbol) o;
+		return idSymbol == symbol.idSymbol;
 	}
 
 }

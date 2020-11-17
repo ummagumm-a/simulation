@@ -1,37 +1,45 @@
 
-ˆ
-java:S1104"fMake allCapitalCaseSymbolsAlive a static final constant or non-public and provide accessors if needed.(€¥ş±úÿÿÿÿ8¾ÚáĞÚ.
-Y
-java:S1444"<Make this "public static allPassiveSymbolsAlive" field final(•øúê8¯ÑÚ.
-:
-java:S2386"Make this member "protected".(Ö¼Ş„8ƒŒ’ÑÚ.
-:
-java:S2386"Make this member "protected".(˜¶³²8ƒŒ’ÑÚ.
-\
-java:S1118":Add a private constructor to hide the implicit public one.(ö¼ÁÀúÿÿÿÿ8èÜÂÓÚ.
 ?
-java:S2386"Make this member "protected".(»‡Ñøÿÿÿÿ8ƒŒ’ÑÚ.
-
-java:S1104"dMake allSmallCaseSymbolsAlive a static final constant or non-public and provide accessors if needed.(˜¶³²8¾ÚáĞÚ.
-‚
-java:S1104"eMake allAggressiveSymbolsAlive a static final constant or non-public and provide accessors if needed.(Ö¼Ş„8¾ÚáĞÚ.
+java:S2386"Make this member "protected".(ìøÆßÿÿÿÿÿ8ô£ã”Û.
 [
-java:S1444">Make this "public static allSmallCaseSymbolsAlive" field final(˜¶³²8¯ÑÚ.
-?
-java:S2386"Make this member "protected".(€¥ş±úÿÿÿÿ8ƒŒ’ÑÚ.
+java:S1444"@Make this "public static allCapitalCaseSymbolsAlive" field final(Îà­Íùÿÿÿÿ
+U
+java:S1444"?Make this "public static allAggressiveSymbolsAlive" field final(œ¸ó£
+
+java:S1104"fMake allCapitalCaseSymbolsAlive a static final constant or non-public and provide accessors if needed.(Îà­Íùÿÿÿÿ
+p
+java:S1104"UMake idCounter a static final constant or non-public and provide accessors if needed.(´²Å¯úÿÿÿÿ
+3
+java:S2386"Make this member "protected".(œ¸ó£
+U
+java:S1118":Add a private constructor to hide the implicit public one.(ö¼ÁÀúÿÿÿÿ
+H
+java:S21755"+A "List<CapitalCase>" cannot contain a "T".(‡ÕáÑ8Şé”Û.
+z
+java:S1104"dMake allSmallCaseSymbolsAlive a static final constant or non-public and provide accessors if needed.(–Àòô
+8
+java:S2386"Make this member "protected".(—•„ûÿÿÿÿ
+J
+java:S1444"/Make this "public static idCounter" field final(´²Å¯úÿÿÿÿ
 W
-java:S1444"5Make this "public static allSymbolsAlive" field final(»‡Ñøÿÿÿÿ8µ×€ÑÚ.
-\
-java:S1444"?Make this "public static allAggressiveSymbolsAlive" field final(Ö¼Ş„8¯ÑÚ.
-:
-java:S2386"Make this member "protected".(•øúê8ƒŒ’ÑÚ.
-b
-java:S1444"@Make this "public static allCapitalCaseSymbolsAlive" field final(€¥ş±úÿÿÿÿ8¯ÑÚ.
+java:S1444"5Make this "public static allSymbolsAlive" field final(ìøÆßÿÿÿÿÿ8Ëã”Û.
+{
+java:S1104"eMake allAggressiveSymbolsAlive a static final constant or non-public and provide accessors if needed.(œ¸ó£
+G
+java:S21757"*A "List<Aggressive>" cannot contain a "T".(†Çöì8Óôé”Û.
+3
+java:S2386"Make this member "protected".(–Àòô
+D
+java:S21756"'A "List<Passive>" cannot contain a "T".(õú¶ÿ8ùÀé”Û.
+W
+java:S1444"<Make this "public static allPassiveSymbolsAlive" field final(—•„ûÿÿÿÿ
 }
-java:S1104"[Make allSymbolsAlive a static final constant or non-public and provide accessors if needed.(»‡Ñøÿÿÿÿ8¾ÚáĞÚ.
-Q
-java:S1444"/Make this "public static idCounter" field final(´²Å¯úÿÿÿÿ8¯ÍüÍÚ.
-w
-java:S1104"UMake idCounter a static final constant or non-public and provide accessors if needed.(´²Å¯úÿÿÿÿ8¯ÍüÍÚ.
-
-java:S1104"bMake allPassiveSymbolsAlive a static final constant or non-public and provide accessors if needed.(•øúê8¾ÚáĞÚ.
+java:S1104"[Make allSymbolsAlive a static final constant or non-public and provide accessors if needed.(ìøÆßÿÿÿÿÿ8Ëã”Û.
+T
+java:S1444">Make this "public static allSmallCaseSymbolsAlive" field final(–Àòô
+8
+java:S2386"Make this member "protected".(Îà­Íùÿÿÿÿ
+F
+java:S21754")A "List<SmallCase>" cannot contain a "T".(ï³Öë8ğ­í”Û.
+}
+java:S1104"bMake allPassiveSymbolsAlive a static final constant or non-public and provide accessors if needed.(—•„ûÿÿÿÿ
