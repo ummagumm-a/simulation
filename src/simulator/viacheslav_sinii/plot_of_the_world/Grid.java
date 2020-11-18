@@ -20,7 +20,7 @@ public class Grid {
      * This field is 10x10 grid. Each cell is an array consisting of two elements:
      * an id of the symbol that currently is placed here and the character of that symbol.
      */
-    public static Symbol[][] fields = new Symbol[WorldController.MAX_ROWS][WorldController.MAX_COLS];
+    public static char[][] fields = new char[WorldController.MAX_ROWS][WorldController.MAX_COLS];
     public static String plot;
     public static Position[][] positions = new Position[WorldController.MAX_ROWS][WorldController.MAX_COLS];
 
@@ -47,7 +47,7 @@ public class Grid {
             }
             plot += "\n";
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
-                plot += "| " + getCharacterForSymbol(fields[row][column]) + " |";
+                plot += "| " + fields[row][column] + " |";
             }
             plot += "\n";
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
@@ -56,8 +56,8 @@ public class Grid {
             plot += "\n";
 
         }
-        plot += SetsOfSymbols.allSymbolsAlive.size() + "\n"
-                + SetsOfSymbols.allSymbolsAlive + "\n";
+        plot += SetsOfSymbols.allSymbolsAlive.size() + "\n";
+//                + SetsOfSymbols.allSymbolsAlive + "\n";
     }
 
     private static <T extends Symbol> char getCharacterForSymbol(T symbol) {
@@ -86,20 +86,15 @@ public class Grid {
     static void refresh() {
         for (int row = 0; row < WorldController.MAX_ROWS; row++) {
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
-                fields[row][column] = null;
+                fields[row][column] = ' ';
             }
         }
     }
-
     private static void updateFields() {
         for (Map.Entry<Position, LinkedList<Symbol>> entry :
                 WorldController.world.entrySet()) {
-            try {
-                fields[entry.getKey().row][entry.getKey().column] = entry.getValue().get(0);
-            } catch (IndexOutOfBoundsException e) {
-
-            }
-
+             fields[entry.getKey().row][entry.getKey().column] = getCharacterForSymbol(entry.getValue().get(0));
         }
+
     }
 }

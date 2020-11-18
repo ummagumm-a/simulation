@@ -1,13 +1,11 @@
 package simulator.viacheslav_sinii.symbols;
 
 import simulator.do_not_change.*;
+import simulator.viacheslav_sinii.plot_of_the_world.Scene;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
-public class SymbolSmallS extends Symbol implements Passive, SmallCase {
+public class SymbolSmallS extends Symbol implements Passive, SmallCase, AdvancedSmallCase, RandomlyMoveable {
 
     public boolean isPaired;
     public boolean isPassive;
@@ -15,13 +13,14 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
     public boolean isBreeding;
 
     Symbol closest = null;
-    HashSet<SymbolSmallS> blackList = new HashSet<>();
+    HashSet<Symbol> blackList = new HashSet<>();
     LinkedList<SymbolSmallS> potentialPartners = new LinkedList<>();
     LinkedList<Symbol> enemies = new LinkedList<>();
 
     public SymbolSmallS() {
         idSymbol = Symbol.COUNT_SYMBOLS++;
         sightDistance = 3;
+        numberIterationsAlive = 0;
     }
 
     @Override
@@ -44,10 +43,8 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
         } else if (closest != null) {
             isEscaping = true;
         } else {
-            // TODO: write random move
+            randomMove(this);
         }
-
-        becomeOlder();
     }
 
     private Symbol findClosest() {
@@ -58,7 +55,7 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
 
         for (SymbolSmallS symbol :
                 potentialPartners) {
-            if (this.getPosition().manhattanDistance(symbol.getPosition()) <= minDistanceToPartner) {
+            if (this.getPosition().manhattanDistance(symbol.getPosition()) < minDistanceToPartner) {
                 closestPartner = symbol;
                 minDistanceToPartner = this.getPosition().manhattanDistance(symbol.getPosition());
             }
@@ -66,7 +63,7 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
 
         for (Symbol symbol :
                 enemies) {
-            if (this.getPosition().manhattanDistance(symbol.getPosition()) <= minDistanceToPartner) {
+            if (this.getPosition().manhattanDistance(symbol.getPosition()) < minDistanceToDanger) {
                 closestDanger = symbol;
                 minDistanceToDanger = this.getPosition().manhattanDistance(symbol.getPosition());
             }
@@ -93,7 +90,7 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
                             symbols) {
                         if (!this.equals(symbol)) {
                             if (symbol instanceof SymbolSmallS) {
-                                if (this.getNumberIterationsAlive() > 6 && symbol.getNumberIterationsAlive() > 6
+                                if (this.getNumberIterationsAlive() > Scene.pubertyTerm && symbol.getNumberIterationsAlive() > Scene.pubertyTerm
                                         && !blackList.contains(symbol)) {
                                     potentialPartners.add((SymbolSmallS) symbol);
                                 }
@@ -109,26 +106,34 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
     }
 
     protected int[] calculateDirection() {
-        if (isPassive) {
-            return new int[]{0, 0};
-        }
-
+        int[] direction;
         int rowGreater = this.position.row - closest.getPosition().row;
         int columnGreater = this.position.column - closest.getPosition().column;
 
+        if (isPassive || rowGreater == 0 && columnGreater == 0) {
+            return new int[]{0, 0};
+        }
+
         if (Math.abs(rowGreater) > Math.abs(columnGreater)) {
             if (rowGreater < 0) {
-                return new int[]{1, 0};
+                direction = new int[]{1, 0};
             } else {
-                return new int[]{-1, 0};
+                direction = new int[]{-1, 0};
             }
         } else {
             if (columnGreater < 0) {
-                return new int[]{0, 1};
+                direction = new int[]{0, 1};
             } else {
-                return new int[]{0, -1};
+                direction = new int[]{0, -1};
             }
         }
+
+        if (isEscaping && this.getNumberIterationsAlive() != 1) {
+            direction[0] *= -1;
+            direction[1] *= -1;
+        }
+
+        return direction;
     }
 
     @Override
@@ -139,8 +144,13 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
 
     @Override
     public void escape() {
-        if (isEscaping) {
-
+        if (isEscaping && this.getNumberIterationsAlive() != 1) {
+            int[] direction = calculateDirection();
+            WorldController.world.get(this.position).remove(this);
+            this.position.row += direction[0];
+            this.position.column += direction[1];
+            Scene.cut(this);
+            WorldController.world.get(this.position).add(this);
         }
     }
 
@@ -151,25 +161,9 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
             WorldController.world.get(this.position).remove(this);
             this.position.row += direction[0];
             this.position.column += direction[1];
-            cut();
+            Scene.cut(this);
             WorldController.world.get(this.position).add(this);
             breed();
-        }
-    }
-
-    private void cut() {
-        if (position.row > 9) {
-            position.row = 9;
-        }
-        if (position.row < 0) {
-            position.row = 0;
-        }
-
-        if (position.column > 9) {
-            position.column = 9;
-        }
-        if (position.column < 0) {
-            position.column = 0;
         }
     }
 
@@ -233,7 +227,7 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
 
     }
 
-    public <T extends Symbol> void createSymbol(HashMap<Integer, Position> adjacentPositions, T symbol) {
+    public void createSymbol(Map<Integer, Position> adjacentPositions, Symbol symbol) {
         Random random = new Random();
         int randomPosition = random.nextInt(adjacentPositions.size()) + 1;
 
@@ -257,13 +251,6 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase {
 
     @Override
     public void upgrade() {
-        if (this.numberIterationsAlive == 10) {
-            Symbol symbol = new SymbolCapitalS();
-            symbol.setPosition(this.position);
-            WorldController.world.get(this.position).add(symbol);
-            SetsOfSymbols.allSymbolsAlive.add(symbol);
-            SetsOfSymbols.allCapitalCaseSymbolsAlive.add((CapitalCase) symbol);
-            this.die();
-        }
+        upgradeTo(this, new SymbolCapitalS());
     }
 }

@@ -1,13 +1,15 @@
 package simulator.viacheslav_sinii.symbols;
 
 import simulator.do_not_change.*;
+import simulator.viacheslav_sinii.plot_of_the_world.Scene;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
+public class SymbolCapitalP extends Symbol implements Passive, CapitalCase, RandomlyMoveable, RandomlyJumpable {
+
     public boolean isPaired;
     public boolean isPassive;
     public boolean isEscaping;
@@ -15,13 +17,14 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
     public boolean isJumping;
 
     Symbol closest = null;
-    HashSet<SymbolCapitalP> blackList = new HashSet<>();
+    HashSet<Symbol> blackList = new HashSet<>();
     LinkedList<SymbolCapitalP> potentialPartners = new LinkedList<>();
     LinkedList<Symbol> enemies = new LinkedList<>();
 
     public SymbolCapitalP() {
         idSymbol = Symbol.COUNT_SYMBOLS++;
-        sightDistance = 3;
+        sightDistance = 4;
+        numberIterationsAlive = 0;
     }
 
     @Override
@@ -31,22 +34,24 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
         isEscaping = false;
         isBreeding = false;
         isJumping = false;
+        potentialPartners.clear();
+        enemies.clear();
 
         scan();
         closest = findClosest();
 
-        if (closest instanceof SymbolSmallS) {
+        if (closest instanceof SymbolCapitalP) {
             isBreeding = true;
             if (this.position.manhattanDistance(closest.getPosition()) == 1) {
-                pairForBreed((SymbolSmallS) closest);
+                pairForBreed((SymbolCapitalP) closest);
             }
         } else if (closest != null) {
             isEscaping = true;
+            isJumping = true;
         } else {
             isJumping = true;
+            randomMove(this);
         }
-
-        becomeOlder();
     }
 
     private Symbol findClosest() {
@@ -57,7 +62,7 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
 
         for (SymbolCapitalP symbol :
                 potentialPartners) {
-            if (this.getPosition().manhattanDistance(symbol.getPosition()) <= minDistanceToPartner) {
+            if (this.getPosition().manhattanDistance(symbol.getPosition()) < minDistanceToPartner) {
                 closestPartner = symbol;
                 minDistanceToPartner = this.getPosition().manhattanDistance(symbol.getPosition());
             }
@@ -65,7 +70,7 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
 
         for (Symbol symbol :
                 enemies) {
-            if (this.getPosition().manhattanDistance(symbol.getPosition()) <= minDistanceToPartner) {
+            if (this.getPosition().manhattanDistance(symbol.getPosition()) < minDistanceToDanger) {
                 closestDanger = symbol;
                 minDistanceToDanger = this.getPosition().manhattanDistance(symbol.getPosition());
             }
@@ -77,9 +82,6 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
     private void scan() {
         for (int row = 0; row < WorldController.MAX_ROWS; row++) {
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
-                if (row == position.row && column == position.column) {
-                    continue;
-                }
                 if (Math.abs(position.row - row) + Math.abs(position.column - column) <= sightDistance) {
                     Position pos = new Position(row, column);
                     LinkedList<Symbol> symbols;
@@ -92,7 +94,7 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
                             symbols) {
                         if (!this.equals(symbol)) {
                             if (symbol instanceof SymbolCapitalP) {
-                                if (this.getNumberIterationsAlive() > 6 && symbol.getNumberIterationsAlive() > 6
+                                if (this.getNumberIterationsAlive() > Scene.pubertyTerm && symbol.getNumberIterationsAlive() > Scene.pubertyTerm
                                         && !blackList.contains(symbol)) {
                                     potentialPartners.add((SymbolCapitalP) symbol);
                                 }
@@ -108,26 +110,34 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
     }
 
     protected int[] calculateDirection() {
-        if (isPassive) {
-            return new int[]{0, 0};
-        }
-
+        int[] direction;
         int rowGreater = this.position.row - closest.getPosition().row;
         int columnGreater = this.position.column - closest.getPosition().column;
 
+        if (isPassive || rowGreater == 0 && columnGreater == 0) {
+            return new int[]{0, 0};
+        }
+
         if (Math.abs(rowGreater) > Math.abs(columnGreater)) {
             if (rowGreater < 0) {
-                return new int[]{1, 0};
+                direction = new int[]{1, 0};
             } else {
-                return new int[]{-1, 0};
+                direction = new int[]{-1, 0};
             }
         } else {
             if (columnGreater < 0) {
-                return new int[]{0, 1};
+                direction = new int[]{0, 1};
             } else {
-                return new int[]{0, -1};
+                direction = new int[]{0, -1};
             }
         }
+
+        if (isEscaping && this.getNumberIterationsAlive() != 1) {
+            direction[0] *= -1;
+            direction[1] *= -1;
+        }
+
+        return direction;
     }
     
     @Override
@@ -138,59 +148,23 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
 
     @Override
     public void jump() {
-//        if (isSurrounded() || !doesMateExist()) {
-//            Random random = new Random();
-//            destination[0] = random.nextInt(WorldController.MAX_ROWS);
-//            destination[1] = random.nextInt(WorldController.MAX_COLS);
-//        }
+        Random random = new Random();
+        boolean mayJump = random.nextBoolean();
+        if (isJumping && mayJump) {
+            randomJump(this);
+        }
     }
-
-    /* Check whether all adjacent cells are occupied by not-similar symbol */
-//    private boolean isSurrounded() {
-//        boolean result = true;
-//        if (position.row < 9) {
-//            result &= Grid.fields[position.row + 1][position.column] != null
-//                    && !(Grid.fields[position.row + 1][position.column] instanceof SymbolCapitalP);
-//        }
-//        if (position.row > 0) {
-//            result &= Grid.fields[position.row - 1][position.column] != null
-//                    && !(Grid.fields[position.row - 1][position.column] instanceof SymbolCapitalP);
-//        }
-//        if (position.column < 9) {
-//            result &= Grid.fields[position.row][position.column + 1] != null
-//                    && !(Grid.fields[position.row][position.column + 1] instanceof SymbolCapitalP);
-//        }
-//        if (position.column > 0) {
-//            result &= Grid.fields[position.row][position.column - 1] != null
-//                    && !(Grid.fields[position.row][position.column - 1] instanceof SymbolCapitalP);
-//        }
-//
-//        return result;
-//
-//    }
-//
-//    /* Check whether there are similar symbols in the sight distance */
-//    private boolean doesMateExist() {
-//        return !similarSymbolsWithinSightDistance.isEmpty();
-//    }
-
-//    /* Check whether there are symbols which can be killed in the sight distance */
-//    private boolean doesPreyExist() {
-//        return
-//    }
 
     @Override
     public void escape() {
-//        for (Symbol symbol :
-//                dangerousSymbolsWithinSightDistance) {
-//            calculateDestination(symbol, 3);
-//        }
-//
-//        for (Symbol symbol :
-//                neutralSymbolsWithinSightDistance) {
-//            calculateDestination(symbol, 1);
-//        }
-
+        if (isEscaping && this.getNumberIterationsAlive() != 1) {
+            int[] direction = calculateDirection();
+            WorldController.world.get(this.position).remove(this);
+            this.position.row += direction[0];
+            this.position.column += direction[1];
+            Scene.cut(this);
+            WorldController.world.get(this.position).add(this);
+        }
     }
 
     @Override
@@ -200,25 +174,9 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
             WorldController.world.get(this.position).remove(this);
             this.position.row += direction[0];
             this.position.column += direction[1];
-            cut();
+            Scene.cut(this);
             WorldController.world.get(this.position).add(this);
             breed();
-        }
-    }
-
-    private void cut() {
-        if (position.row > 9) {
-            position.row = 9;
-        }
-        if (position.row < 0) {
-            position.row = 0;
-        }
-
-        if (position.column > 9) {
-            position.column = 9;
-        }
-        if (position.column < 0) {
-            position.column = 0;
         }
     }
 
@@ -261,21 +219,30 @@ public class SymbolCapitalP extends Symbol implements Passive, CapitalCase {
         }
 
         for (int i = 0; i < n; i++) {
-            createSymbol(adjacentPositions, new SymbolCapitalP());
+            createSymbol(adjacentPositions, new SymbolSmallP());
         }
 
     }
 
-    public <T extends Symbol> void createSymbol(HashMap<Integer, Position> adjacentPositions, T symbol) {
+    public void createSymbol(HashMap<Integer, Position> adjacentPositions, Symbol symbol) {
         Random random = new Random();
         int randomPosition = random.nextInt(adjacentPositions.size()) + 1;
 
+        blackList.add(symbol);
+        ((SymbolSmallP) symbol).blackList.add(this);
+        for (Symbol tmp :
+                WorldController.world.get(this.position)) {
+            if (tmp instanceof SymbolCapitalP) {
+                ((SymbolCapitalP) tmp).blackList.add(symbol);
+            }
+        }
+
         symbol.setPosition(adjacentPositions.get(randomPosition));
-        WorldController.world.get(adjacentPositions.get(randomPosition)).add(symbol);
+        WorldController.world.get(symbol.getPosition()).add(symbol);
         SetsOfSymbols.add(symbol);
     }
     
-    public void pairForBreed(SymbolSmallS partner) {
+    public void pairForBreed(SymbolCapitalP partner) {
         isPaired = true;
         if (partner.isPaired) {
             isPassive = !partner.isPassive;

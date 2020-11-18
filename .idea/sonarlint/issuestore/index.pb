@@ -58,3 +58,7 @@ H
 src/simulator/.gitignore,7/4/74e1eb0bf5f8f8ca1d53aa7c549a606715e0772d
 j
 :src/simulator/viacheslav_sinii/symbols/AdvancedSymbol.java,c/a/ca6ac08e878dda9dd4fb7d1c900eb449c813197f
+m
+=src/simulator/viacheslav_sinii/symbols/AdvancedSmallCase.java,9/2/92f4c71f25390189305dedc62e716106ae3456be
+d
+4src/simulator/viacheslav_sinii/symbols/Movement.java,6/0/6096c0478d1a964a6d3d39cf9745914cd282dc63

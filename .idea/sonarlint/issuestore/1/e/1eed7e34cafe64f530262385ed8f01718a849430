@@ -1,7 +1,7 @@
 
 P
 java:S1444"3Make this "public static COUNT_SYMBOLS" field final(´½“8ª›³şÜ.
-v
-java:S1104"YMake COUNT_SYMBOLS a static final constant or non-public and provide accessors if needed.(´½“8ª›³şÜ.
 u
 java:S3008"XRename this field "COUNT_SYMBOLS" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´½“8ª›³şÜ.
+v
+java:S1104"YMake COUNT_SYMBOLS a static final constant or non-public and provide accessors if needed.(´½“8ª›³şÜ.

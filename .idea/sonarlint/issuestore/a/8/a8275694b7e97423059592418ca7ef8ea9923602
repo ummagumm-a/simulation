@@ -1,8 +1,29 @@
 
-R
-java:S2696"6Make the enclosing method "static" or remove this set.(œ÷Ï8ªœ¥Ã€.
-u
-java:S1128"XRemove this unused import 'simulator.viacheslav_sinii.plot_of_the_world.ProperPosition'.(ﬂëØà8°ıﬂö€.
-]	java:S125d"<This block of commented-out lines of code should be removed.(ãè‰‘˙ˇˇˇˇ8ùÖ¢ö€.
-:
-java:S2119@"Save and re-use this "Random".(º›≈f8ùÖ¢ö€.
+E	java:S1082")Either remove or fill this block of code.(Â•ûá8êï∆››.
+^	java:S125ù"<This block of commented-out lines of code should be removed.(Ç…ﬂŒ˚ˇˇˇˇ8íì˛∂›.
+o
+java:S3776P"RRefactor this method to reduce its Cognitive Complexity from 34 to the 15 allowed.(ß¡¯€8ØÊà±›.
+w
+java:S1104"UMake isPassive a static final constant or non-public and provide accessors if needed.(°ÇÛ—˙ˇˇˇˇ8âŒ∆∞›.
+L
+java:S1066Ì"/Merge this if statement with the enclosing one.(’à¨8íì˛∂›.
+w
+java:S1104"UMake isJumping a static final constant or non-public and provide accessors if needed.(Ÿ˘ˆÿ˛ˇˇˇˇ8âŒ∆∞›.
+M
+java:S2160"+Override the "equals" method in this class.(≈Çíô˛ˇˇˇˇ8âŒ∆∞›.
+ó
+java:S1319ì"yThe type of the "adjacentPositions" object should be an interface such as "Map" rather than the implementation "HashMap".(∑˜˙«8íì˛∂›.
+p
+java:S1104"TMake isPaired a static final constant or non-public and provide accessors if needed.(™å»I8âŒ∆∞›.
+x
+java:S1104"VMake isBreeding a static final constant or non-public and provide accessors if needed.(≈Àâé¸ˇˇˇˇ8âŒ∆∞›.
+^	java:S125∫"<This block of commented-out lines of code should be removed.(ãè‰‘˙ˇˇˇˇ8íì˛∂›.
+s
+java:S1104"VMake isEscaping a static final constant or non-public and provide accessors if needed.(± ÄÃ8âŒ∆∞›.
+O
+java:S1905Ô"1Remove this unnecessary cast to "SymbolCapitalP".(Ï¬Ó∑8íì˛∂›.
+Y	java:S125ï"<This block of commented-out lines of code should be removed.(ƒë £8íì˛∂›.
+;
+java:S2119î"Save and re-use this "Random".(º›≈f8íì˛∂›.
+;
+java:S2119≠"Save and re-use this "Random".(º›≈f8íì˛∂›.

@@ -17,6 +17,9 @@ import java.util.*;
 public class Scene extends WorldController {
 
     public static int day = 0;
+    public static final int pubertyTerm = 6;
+    public static final int growingTerm = 10;
+    public static final int lifeTerm = 18;
 
     public Scene() {
         world = new HashMap<>();
@@ -37,16 +40,16 @@ public class Scene extends WorldController {
 
     @Override
     public void symbolsMove(List<Symbol> symbols) {
-        for (Symbol tmp :
-                symbols) {
-            tmp.move();
+        for (int i = 0; i < symbols.size(); i++) {
+            symbols.get(i).move();
+            symbols.get(i).becomeOlder();
         }
     }
 
     @Override
     public void symbolsDie(List<Symbol> symbols) {
         for (int i = 0; i < symbols.size(); i++) {
-            if (symbols.get(i).getNumberIterationsAlive() == 12) {
+            if (symbols.get(i).getNumberIterationsAlive() == lifeTerm) {
                 symbols.get(i).die();
                 i--;
             }
@@ -96,33 +99,91 @@ public class Scene extends WorldController {
         }
     }
 
+    private void battle() {
+        for (Map.Entry<Position, LinkedList<Symbol>> entry :
+                WorldController.world.entrySet()) {
+            int numberOfSs = 0;
+            int numberOfPs = 0;
+            int numberOfRs = 0;
+
+            for (Symbol symbol :
+                    entry.getValue()) {
+                if (symbol instanceof SymbolCapitalR || symbol instanceof SymbolSmallR) {
+                    numberOfRs++;
+                }
+                if (symbol instanceof SymbolCapitalS || symbol instanceof SymbolSmallS) {
+                    numberOfSs++;
+                }
+                if (symbol instanceof SymbolCapitalP || symbol instanceof SymbolSmallP) {
+                    numberOfPs++;
+                }
+            }
+
+            if (numberOfPs > 0 && numberOfRs > 0 && numberOfSs > 0) {
+                for (int i = 0; i < entry.getValue().size(); i++) {
+                    entry.getValue().get(i).die();
+                    i--;
+                }
+            }
+
+            if (numberOfPs == 0 && numberOfRs > 0 && numberOfSs > 0) {
+                for (int i = 0; i < entry.getValue().size(); i++) {
+                    if (entry.getValue().get(i) instanceof SymbolCapitalS || entry.getValue().get(i) instanceof SymbolSmallS) {
+                        entry.getValue().get(i).die();
+                        i--;
+                    }
+                }
+            } else if (numberOfPs > 0 && numberOfRs == 0 && numberOfSs > 0) {
+                for (int i = 0; i < entry.getValue().size(); i++) {
+                    if (entry.getValue().get(i) instanceof SymbolCapitalP || entry.getValue().get(i) instanceof SymbolSmallP) {
+                        entry.getValue().get(i).die();
+                        i--;
+                    }
+                }
+            } else if (numberOfPs > 0 && numberOfRs > 0 && numberOfSs == 0) {
+                for (int i = 0; i < entry.getValue().size(); i++) {
+                    if (entry.getValue().get(i) instanceof SymbolCapitalR || entry.getValue().get(i) instanceof SymbolSmallR) {
+                        entry.getValue().get(i).die();
+                        i--;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void cut(Symbol symbol) {
+        if (symbol.getPosition().row > 9) {
+            symbol.getPosition().row = 9;
+        }
+        if (symbol.getPosition().row < 0) {
+            symbol.getPosition().row = 0;
+        }
+
+        if (symbol.getPosition().column > 9) {
+            symbol.getPosition().column = 9;
+        }
+        if (symbol.getPosition().column < 0) {
+            symbol.getPosition().column = 0;
+        }
+    }
+
     @Override
     public String plotWorld() {
-//        Grid.refresh();
         if (day != 0) {
             symbolsMove(SetsOfSymbols.allSymbolsAlive);
-            symbolsDie(SetsOfSymbols.allSymbolsAlive);
-            smallCaseUpgrade(SetsOfSymbols.allSmallCaseSymbolsAlive);
-//            capitalCaseJump(SetsOfSymbols.allCapitalCaseSymbolsAlive);
-//            passiveEscape(SetsOfSymbols.allPassiveSymbolsAlive);
+            capitalCaseJump(SetsOfSymbols.allCapitalCaseSymbolsAlive);
+            passiveEscape(SetsOfSymbols.allPassiveSymbolsAlive);
+            aggressiveAttackSmart(SetsOfSymbols.allAggressiveSymbolsAlive);
             passiveBreed(SetsOfSymbols.allPassiveSymbolsAlive);
-//            aggressiveAttackSmart(SetsOfSymbols.allAggressiveSymbolsAlive);
-            assignContent();
+            smallCaseUpgrade(SetsOfSymbols.allSmallCaseSymbolsAlive);
+            symbolsDie(SetsOfSymbols.allSymbolsAlive);
+            battle();
         }
+//        Grid.refresh();
+//        assignContent();
         Grid.constructPlot();
 
         return Grid.plot;
-    }
-
-    /** This method iterates through the list of living symbols,
-     * finds where they are placed and puts id of a symbol and
-     * corresponding character to that position.
-     */
-    private void assignContent() {
-        for (Symbol entry :
-                SetsOfSymbols.allSymbolsAlive) {
-            Grid.fields[entry.getPosition().row][entry.getPosition().column] = entry;
-        }
     }
 
     /**
@@ -140,35 +201,53 @@ public class Scene extends WorldController {
             }
         }
 
-        Symbol symbol = new SymbolSmallR();
-        symbol.setPosition(new Position(5,3));
+//        Symbol symbol = new SymbolCapitalR();
+//        symbol.setPosition(new Position(2, 4));
+//        SetsOfSymbols.add(symbol);
+//        WorldController.world.get(symbol.getPosition()).add(symbol);
+
+        Symbol symbol = new SymbolCapitalP();
+        symbol.setPosition(new Position(2,7));
+        SetsOfSymbols.add(symbol);
+        WorldController.world.get(symbol.getPosition()).add(symbol);
+
+        symbol = new SymbolCapitalR();
+        symbol.setPosition(new Position(2, 4));
         SetsOfSymbols.add(symbol);
         WorldController.world.get(symbol.getPosition()).add(symbol);
 
         symbol = new SymbolSmallR();
-        symbol.setPosition(new Position(5,5));
+        symbol.setPosition(new Position(2,1));
         SetsOfSymbols.add(symbol);
         WorldController.world.get(symbol.getPosition()).add(symbol);
 
-//        symbol = new SymbolSmallR();
-//        symbol.setPosition(new Position(4,4));
-//        SetsOfSymbols.add(symbol);
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
+        symbol = new SymbolSmallS();
+        symbol.setPosition(new Position(5,8));
+        SetsOfSymbols.add(symbol);
+        WorldController.world.get(symbol.getPosition()).add(symbol);
 
-//        Symbol symbol = new SymbolSmallP();
-//        symbol.setPosition(new Position(4,4));
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
-//        SetsOfSymbols.allSymbolsAlive.add(symbol);
-//        SetsOfSymbols.allSmallCaseSymbolsAlive.add((SmallCase) symbol);
+        symbol = new SymbolSmallR();
+        symbol.setPosition(new Position(4,4));
+        SetsOfSymbols.add(symbol);
+        WorldController.world.get(symbol.getPosition()).add(symbol);
 
-//        for (int i = 0; i < 10; i++) {
-//            createSymbol(occupiedPositions, new SymbolCapitalP());
+//        Symbol symbol;
+//        for (int i = 0; i < 5; i++) {
+//            symbol = new SymbolCapitalP();
+//            symbol.setPosition(new Position(4, i));
+//            WorldController.world.get(symbol.getPosition()).add(symbol);
+//            SetsOfSymbols.add(symbol);
 //        }
 
+
+//        for (int i = 0; i < 5; i++) {
+//            createSymbol(occupiedPositions, new SymbolCapitalP());
+//        }
+//
 //        for (int i = 0; i < 10; i++) {
 //            createSymbol(occupiedPositions, new SymbolCapitalR());
 //        }
-
+//
 //        for (int i = 0; i < 10; i++) {
 //            createSymbol(occupiedPositions, new SymbolCapitalS());
 //        }
@@ -177,13 +256,13 @@ public class Scene extends WorldController {
 //            createSymbol(occupiedPositions, new SymbolSmallP());
 //        }
 //
-        for (int i = 0; i < 5; i++) {
-            createSymbol(occupiedPositions, new SymbolSmallR());
-        }
+//        for (int i = 0; i < 5; i++) {
+//            createSymbol(occupiedPositions, new SymbolSmallR());
+//        }
 //
-        for (int i = 0; i < 5; i++) {
-            createSymbol(occupiedPositions, new SymbolSmallS());
-        }
+//        for (int i = 0; i < 5; i++) {
+//            createSymbol(occupiedPositions, new SymbolSmallS());
+//        }
     }
 
     /* In this method we randomly choose an empty cell for allocating the unit.

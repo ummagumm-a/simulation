@@ -1,9 +1,19 @@
 
+H
+java:S2160	"+Override the "equals" method in this class.(íéŠ8ßè­µİ.
+K
+java:S1066-"/Merge this if statement with the enclosing one.(Õˆ¬8ô…¢µİ.
+–
+java:S1319S"yThe type of the "adjacentPositions" object should be an interface such as "Map" rather than the implementation "HashMap".(·÷úÇ8ô…¢µİ.
+G
+java:S1144'"*Remove this unused private "breed" method.(ñĞ‹‡8ô…¢µİ.
 œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(´õÁ¬şÿÿÿÿ
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ä İ˜úÿÿÿÿ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ä İ˜úÿÿÿÿ
+S
+java:S1905/"1Remove this unnecessary cast to "SymbolCapitalS".(“ÎŞùÿÿÿÿ8á½Ùµİ.
 —
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ã± ±
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ã± ±
+:
+java:S2119T"Save and re-use this "Random".(¼İÅf8ô…¢µİ.
 œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(œ€Íùÿÿÿÿ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(œ€Íùÿÿÿÿ

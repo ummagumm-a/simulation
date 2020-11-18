@@ -1,9 +1,19 @@
 
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(´õÁ¬şÿÿÿÿ
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ä İ˜úÿÿÿÿ
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(œ€Íùÿÿÿÿ
-œ
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(˜ÄÒòùÿÿÿÿ
+R
+java:S1905˜"/Remove this unnecessary cast to "SymbolSmallP".( ¼–öùÿÿÿÿ8’®åµİ.
+£
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Á”åœúÿÿÿÿ8…„ê°İ.
+;
+java:S2119½"Save and re-use this "Random".(¼İÅf8‰ß¬µİ.
+L
+java:S1066–"/Merge this if statement with the enclosing one.(Õˆ¬8‰ß¬µİ.
+O
+java:S1135'"2Complete the task associated to this TODO comment.(â¢Œ™8¦—°½İ.
+o
+java:S3776R"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(§ÁøÛ8ãæ½İ.
+l
+java:S1128"ORemove this unused import 'simulator.viacheslav_sinii.plot_of_the_world.Scene'.(³˜‰¼8Æ³´İ.
+M
+java:S2160"+Override the "equals" method in this class.(®™¬üÿÿÿÿ8’ú®µİ.
+\
+java:S1161,":Add the "@Override" annotation above this method signature(œ¯™ìøÿÿÿÿ8ãæ½İ.
