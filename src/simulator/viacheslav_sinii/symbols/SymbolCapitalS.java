@@ -1,13 +1,19 @@
 package simulator.viacheslav_sinii.symbols;
 
 import simulator.do_not_change.*;
+import simulator.viacheslav_sinii.Simulator;
 import simulator.viacheslav_sinii.plot_of_the_world.Scene;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Random;
 
+/**
+ * The class for capital s symbol.
+ *
+ * @author Sinii Viacheslav
+ * @since 2020-11-18
+ */
 public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, RandomlyMoveable, RandomlyJumpable {
 
     boolean isAttacking;
@@ -18,12 +24,16 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
     LinkedList<Symbol> possiblePreys = new LinkedList<>();
 
 
+    /**
+     * Instantiates a new Symbol capital s.
+     */
     public SymbolCapitalS() {
         idSymbol = Symbol.COUNT_SYMBOLS++;
         sightDistance = 4;
         numberIterationsAlive = 0;
     }
 
+    /** In this method mechanism of moving for attacking is defined */
     @Override
     public void attackSmart() {
         if (isAttacking) {
@@ -36,7 +46,8 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
         }
     }
 
-    protected int[] calculateDirection() {
+    /* In this method method decides in which direction to go. */
+    private int[] calculateDirection() {
         int rowGreater = this.position.row - closest.getPosition().row;
         int columnGreater = this.position.column - closest.getPosition().column;
 
@@ -58,6 +69,7 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
         }
     }
 
+    /* In this method symbols scans the world within sight distance for symbols which it's interested in. */
     private void scan() {
         for (int row = 0; row < WorldController.MAX_ROWS; row++) {
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
@@ -75,12 +87,12 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
                             possiblePreys.add(symbol);
                         }
                     }
-
                 }
             }
         }
     }
 
+    /* This method finds the closest symbol within sight distance */
     private Symbol findClosest() {
         Symbol closestPrey = null;
         int minDistanceToPrey = 10;
@@ -96,20 +108,27 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
         return closestPrey;
     }
 
+    /**
+     * In this method defined mechanism of jumping.
+     */
     @Override
     public void jump() {
-        Random random = new Random();
-        boolean mayJump = random.nextBoolean();
+        // 50% change to jump somewhere
+        boolean mayJump = Simulator.random.nextBoolean();
         if (isJumping && mayJump) {
             randomJump(this);
         }
     }
 
+    /**
+     * Here symbol decides what to do. If there are no other symbols nearby, it starts to move or jumps.
+     */
     @Override
     public void move() {
         breed();
 
         isAttacking = false;
+        isJumping = false;
         possiblePreys.clear();
 
         scan();
@@ -123,13 +142,19 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
         }
     }
 
+    /**
+     * In this method defined mechanism of dying
+     */
     @Override
     public void die() {
+        // Symbol is deleted from all lists it is in.
         SetsOfSymbols.kill(this);
+        // Symbol is deleted from its position in the world.
         WorldController.world.get(this.position).remove(this);
     }
 
-    // Breed
+    /* Method for breeding. Symbol interbreeds with every symbol in the same position.
+     * After the breeding partners are added to black lists of each other. */
     private void breed() {
         int numberOfChildren = 0;
 
@@ -147,6 +172,7 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
         createChildren(numberOfChildren);
     }
 
+    /* Create children in any of adjacent positions */
     private void createChildren(int n) {
         HashMap<Integer, Position> adjacentPositions = new HashMap<>();
         Position pos;
@@ -174,16 +200,18 @@ public class SymbolCapitalS extends Symbol implements Aggressive, CapitalCase, R
 
     }
 
-    public void createSymbol(HashMap<Integer, Position> adjacentPositions, Symbol symbol) {
-        Random random = new Random();
-        int randomPosition = random.nextInt(adjacentPositions.size()) + 1;
+    /* New symbol (a child) is creating. After it is born, kid and parent are added to the black lists
+     * of each other. Child is created on one of the adjacent positions. */
+    private void createSymbol(HashMap<Integer, Position> adjacentPositions, Symbol symbol) {
+
+        int randomPosition = Simulator.random.nextInt(adjacentPositions.size()) + 1;
 
         blackList.add(symbol);
-        ((SymbolSmallR) symbol).blackList.add(this);
+        ((SymbolSmallS) symbol).blackList.add(this);
         for (Symbol tmp :
                 WorldController.world.get(this.position)) {
-            if (tmp instanceof SymbolCapitalR) {
-                ((SymbolCapitalR) tmp).blackList.add(symbol);
+            if (tmp instanceof SymbolCapitalS) {
+                ((SymbolCapitalS) tmp).blackList.add(symbol);
             }
         }
 

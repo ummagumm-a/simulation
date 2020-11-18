@@ -10,21 +10,65 @@ import java.util.List;
  * about all living symbols and for assigning their ids.
  *
  * @author Sinii Viacheslav
- * @since 2020-11-09
+ * @since 2020 -11-09
  */
 public class SetsOfSymbols {
-    /* HashMaps for all living symbols altogether and separately for each type of the symbol
-     * Key is the id of a symbol and value is the symbol itself. */
-    public static List<Symbol> allSymbolsAlive = new LinkedList<>();
-    public static List<SmallCase> allSmallCaseSymbolsAlive = new LinkedList<>();
-    public static List<CapitalCase> allCapitalCaseSymbolsAlive = new LinkedList<>();
-    public static List<Passive> allPassiveSymbolsAlive = new LinkedList<>();
-    public static List<Aggressive> allAggressiveSymbolsAlive = new LinkedList<>();
+    /* Lists for all living symbols altogether and separately for each type of the symbol */
+    private static List<Symbol> allSymbolsAlive = new LinkedList<>();
+    private static List<SmallCase> allSmallCaseSymbolsAlive = new LinkedList<>();
+    private static List<CapitalCase> allCapitalCaseSymbolsAlive = new LinkedList<>();
+    private static List<Passive> allPassiveSymbolsAlive = new LinkedList<>();
+    private static List<Aggressive> allAggressiveSymbolsAlive = new LinkedList<>();
 
-    public static int idCounter = 1;
+    /**
+     * Gets all symbols alive.
+     *
+     * @return the all symbols alive
+     */
+    public static List<Symbol> getAllSymbolsAlive() {
+        return allSymbolsAlive;
+    }
 
-    /** This method adds a new symbol to the list of all living symbols
+    /**
+     * Gets all small case symbols alive.
+     *
+     * @return the all small case symbols alive
+     */
+    public static List<SmallCase> getAllSmallCaseSymbolsAlive() {
+        return allSmallCaseSymbolsAlive;
+    }
+
+    /**
+     * Gets all capital case symbols alive.
+     *
+     * @return the all capital case symbols alive
+     */
+    public static List<CapitalCase> getAllCapitalCaseSymbolsAlive() {
+        return allCapitalCaseSymbolsAlive;
+    }
+
+    /**
+     * Gets all passive symbols alive.
+     *
+     * @return the all passive symbols alive
+     */
+    public static List<Passive> getAllPassiveSymbolsAlive() {
+        return allPassiveSymbolsAlive;
+    }
+
+    /**
+     * Gets all aggressive symbols alive.
+     *
+     * @return the all aggressive symbols alive
+     */
+    public static List<Aggressive> getAllAggressiveSymbolsAlive() {
+        return allAggressiveSymbolsAlive;
+    }
+
+    /**
+     * This method adds new symbol to the list of all living symbols
      * and to the one that corresponds to the type of the symbol.
+     *
      * @param symbol The symbol to add.
      */
     public static void add(Symbol symbol) {
@@ -43,11 +87,13 @@ public class SetsOfSymbols {
         }
     }
 
-    /** This method removes a symbol from the list of all living symbols
+    /**
+     * This method removes a symbol from the list of all living symbols
      * and from the one that corresponds to the type of the symbol.
+     *
      * @param symbol The symbol to delete.
      */
-    public static <T extends Symbol> void kill(T symbol) {
+    public static void kill(Symbol symbol) {
         allSymbolsAlive.remove(symbol);
         allSmallCaseSymbolsAlive.remove(symbol);
         allCapitalCaseSymbolsAlive.remove(symbol);

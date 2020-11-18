@@ -2,14 +2,21 @@ package simulator.viacheslav_sinii.symbols;
 
 import simulator.do_not_change.Symbol;
 import simulator.do_not_change.WorldController;
+import simulator.viacheslav_sinii.Simulator;
 import simulator.viacheslav_sinii.plot_of_the_world.Scene;
 
-import java.util.Random;
-
+/**
+ * This interface "extends" defines mechanism of move for symbol.
+ */
 public interface RandomlyMoveable {
+    /**
+     * Movement in random direction.
+     *
+     * @param symbol the subject
+     */
     default void randomMove(Symbol symbol) {
-        Random random = new Random();
-        int i = random.nextInt(5);
+
+        int i = Simulator.random.nextInt(5);
 
         WorldController.world.get(symbol.getPosition()).remove(symbol);
 

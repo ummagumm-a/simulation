@@ -9,11 +9,12 @@
 ./simulator/viacheslav_sinii/symbols/SymbolSmallR.java
 ./simulator/viacheslav_sinii/symbols/SymbolCapitalR.java
 ./simulator/viacheslav_sinii/symbols/SymbolCapitalP.java
-./simulator/viacheslav_sinii/symbols/AdvancedSymbol.java
 ./simulator/viacheslav_sinii/symbols/SymbolSmallS.java
+./simulator/viacheslav_sinii/symbols/RandomlyMoveable.java
 ./simulator/viacheslav_sinii/symbols/SetsOfSymbols.java
 ./simulator/viacheslav_sinii/symbols/SymbolSmallP.java
 ./simulator/viacheslav_sinii/symbols/AdvancedSmallCase.java
 ./simulator/viacheslav_sinii/symbols/SymbolCapitalS.java
+./simulator/viacheslav_sinii/symbols/RandomlyJumpable.java
 ./simulator/viacheslav_sinii/plot_of_the_world/Scene.java
 ./simulator/viacheslav_sinii/plot_of_the_world/Grid.java

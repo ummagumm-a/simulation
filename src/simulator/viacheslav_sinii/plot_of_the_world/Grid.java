@@ -19,6 +19,12 @@ public class Grid {
 
     private static char[][] charactersOfInnerSymbols = new char[WorldController.MAX_ROWS][WorldController.MAX_COLS];
     private static String plot;
+
+    /**
+     * Return char two-dimension array - view of the world.
+     *
+     * @return the plot
+     */
     public static String getPlot() {
         return plot;
     }
@@ -33,7 +39,7 @@ public class Grid {
     public static void constructPlot() {
         updateFields();
         // TODO: delete before submitting
-        plot = Scene.day + "\n";
+        plot = Scene.getDay() + "\n";
         for (int row = 0; row < WorldController.MAX_ROWS; row++) {
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
                 plot += "┌───┐";
@@ -49,8 +55,8 @@ public class Grid {
             plot += "\n";
         }
         // TODO: delete these lines before submitting
-        plot += SetsOfSymbols.allSymbolsAlive.size() + "\n";
-//                + SetsOfSymbols.allSymbolsAlive + "\n";
+        plot += SetsOfSymbols.getAllSymbolsAlive().size() + "\n";
+//                + SetsOfSymbols.getAllSymbolsAlive() + "\n";
     }
 
     /* This method assigns the corresponding letter of a symbol that is placed in a cell to each cell */

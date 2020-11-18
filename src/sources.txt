@@ -9,7 +9,6 @@
 ./simulator/viacheslav_sinii/symbols/SymbolSmallR.java
 ./simulator/viacheslav_sinii/symbols/SymbolCapitalR.java
 ./simulator/viacheslav_sinii/symbols/SymbolCapitalP.java
-./simulator/viacheslav_sinii/symbols/AdvancedSymbol.java
 ./simulator/viacheslav_sinii/symbols/SymbolSmallS.java
 ./simulator/viacheslav_sinii/symbols/RandomlyMoveable.java
 ./simulator/viacheslav_sinii/symbols/SetsOfSymbols.java
