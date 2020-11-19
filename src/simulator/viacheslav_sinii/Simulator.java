@@ -11,7 +11,7 @@ import java.util.Random;
 public class Simulator {
 
     private static final int numberOfIterations = 1000;
-    private static final int durationOfDay = 100; // Milliseconds
+    private static final int durationOfDay = 500; // Milliseconds
 
     /**
      * The constant random.
@@ -35,16 +35,11 @@ public class Simulator {
         Scene scene = new Scene();
 
         for (int i = 0; i < numberOfIterations; i++) {
-            if (SetsOfSymbols.getAllSymbolsAlive().size() == 0) {
-                System.out.println(Scene.getDay());
-                break;
-            }
             clearScreen();
             System.out.println(scene.plotWorld());
             Thread.sleep(durationOfDay);
             Scene.increaseDay();
         }
-
     }
 
     /* This method clears console */

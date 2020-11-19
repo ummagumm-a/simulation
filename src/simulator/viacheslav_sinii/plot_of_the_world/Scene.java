@@ -6,6 +6,8 @@ import simulator.viacheslav_sinii.symbols.*;
 
 import java.util.*;
 
+import static simulator.viacheslav_sinii.plot_of_the_world.Grid.clearTheWorld;
+
 /**
  * This class is used for plotting the world (scene of actions)
  * and its inhabitants to the console. On each iteration this class is used
@@ -41,7 +43,6 @@ public class Scene extends WorldController {
     public static void increaseDay() {
         day++;
     }
-
 
     /**
      * Gets the number of days passed.
@@ -252,15 +253,15 @@ public class Scene extends WorldController {
         return Grid.getPlot();
     }
 
-    /* If symbols are committing sins too much, God becomes angry and kills most of them */
+    /* If symbols are committing sins too much, God becomes angry and kills all of them */
     private void correction() {
         int population = SetsOfSymbols.getAllSymbolsAlive().size();
         if (population > LIMIT) {
 
-            for (int i = 0; i < population - 3; i++) {
-                Symbol symbol = SetsOfSymbols.getAllSymbolsAlive().get(0);
-                symbol.die();
+            for (int i = 0; i < population; i++) {
+                SetsOfSymbols.getAllSymbolsAlive().get(0).die();
             }
+            clearTheWorld();
         }
     }
 
@@ -293,55 +294,28 @@ public class Scene extends WorldController {
 
         Symbol symbol;
 
-//        symbol = new SymbolCapitalP();
-//        symbol.setPosition(new Position(2, 4));
-//        SetsOfSymbols.add(symbol);
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
-//
-//        symbol = new SymbolCapitalP();
-//        symbol.setPosition(new Position(2,6));
-//        SetsOfSymbols.add(symbol);
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
-//
-//        symbol = new SymbolSmallS();
-//        symbol.setPosition(new Position(2, 5));
-//        SetsOfSymbols.add(symbol);
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
-//
-//        symbol = new SymbolSmallR();
-//        symbol.setPosition(new Position(2,1));
-//        SetsOfSymbols.add(symbol);
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
-//
-//        symbol = new SymbolSmallS();
-//        symbol.setPosition(new Position(5,8));
-//        SetsOfSymbols.add(symbol);
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
-//
-//        symbol = new SymbolSmallR();
-//        symbol.setPosition(new Position(4,4));
-//        SetsOfSymbols.add(symbol);
-//        WorldController.world.get(symbol.getPosition()).add(symbol);
-
-//        Symbol symbol;
-//        for (int i = 0; i < 5; i++) {
-//            symbol = new SymbolCapitalP();
-//            symbol.setPosition(new Position(4, i));
-//            WorldController.world.get(symbol.getPosition()).add(symbol);
-//            SetsOfSymbols.add(symbol);
-//        }
-
-
         for (int i = 0; i < 5; i++) {
-            createSymbol(occupiedPositions, new SymbolCapitalP());
+            symbol = new SymbolCapitalP();
+            createSymbol(occupiedPositions, symbol);
+            for (int j = 0; j < Scene.GROWING_TERM; j++) {
+                symbol.becomeOlder();
+            }
         }
 
         for (int i = 0; i < 5; i++) {
-            createSymbol(occupiedPositions, new SymbolCapitalR());
+            symbol = new SymbolCapitalR();
+            createSymbol(occupiedPositions, symbol);
+            for (int j = 0; j < Scene.GROWING_TERM; j++) {
+                symbol.becomeOlder();
+            }
         }
 
         for (int i = 0; i < 5; i++) {
-            createSymbol(occupiedPositions, new SymbolCapitalS());
+            symbol = new SymbolCapitalS();
+            createSymbol(occupiedPositions, symbol);
+            for (int j = 0; j < Scene.GROWING_TERM; j++) {
+                symbol.becomeOlder();
+            }
         }
 
         for (int i = 0; i < 5; i++) {
@@ -351,7 +325,7 @@ public class Scene extends WorldController {
         for (int i = 0; i < 5; i++) {
             createSymbol(occupiedPositions, new SymbolSmallR());
         }
-
+//
         for (int i = 0; i < 5; i++) {
             createSymbol(occupiedPositions, new SymbolSmallS());
         }

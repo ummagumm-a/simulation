@@ -153,8 +153,8 @@ public class SymbolSmallS extends Symbol implements Passive, SmallCase, Advanced
     }
 
     /**
- * In this method defined mechanism of dying
- */
+     * In this method defined mechanism of dying
+     */
     @Override
     public void die() {
         // Symbol is deleted from all lists it is in.

@@ -18,7 +18,7 @@ import java.util.Map;
 public class Grid {
 
     private static char[][] charactersOfInnerSymbols = new char[WorldController.MAX_ROWS][WorldController.MAX_COLS];
-    private static String plot;
+    private static String plot = "";
 
     /**
      * Return char two-dimension array - view of the world.
@@ -38,8 +38,7 @@ public class Grid {
      */
     public static void constructPlot() {
         updateFields();
-        // TODO: delete before submitting
-        plot = Scene.getDay() + "\n";
+        plot = "Day: " + Scene.getDay() + "\n";
         for (int row = 0; row < WorldController.MAX_ROWS; row++) {
             for (int column = 0; column < WorldController.MAX_COLS; column++) {
                 plot += "┌───┐";
@@ -54,9 +53,6 @@ public class Grid {
             }
             plot += "\n";
         }
-        // TODO: delete these lines before submitting
-        plot += SetsOfSymbols.getAllSymbolsAlive().size() + "\n";
-//                + SetsOfSymbols.getAllSymbolsAlive() + "\n";
     }
 
     /* This method assigns the corresponding letter of a symbol that is placed in a cell to each cell */
@@ -88,6 +84,16 @@ public class Grid {
             } catch (IndexOutOfBoundsException e) {
                 // In case there are no symbols in a position
                 charactersOfInnerSymbols[entry.getKey().row][entry.getKey().column] = ' ';
+            }
+        }
+    }
+
+    /* This method forces the world clear the world from all symbols
+     * This is quick fix of some bug. */
+    public static void clearTheWorld() {
+        for (int i = 0; i < WorldController.MAX_ROWS; i++) {
+            for (int j = 0; j < WorldController.MAX_COLS; j++) {
+                WorldController.world.get(new Position(i, j)).clear();
             }
         }
     }
